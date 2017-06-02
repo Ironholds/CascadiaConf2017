@@ -2,7 +2,7 @@ library(ggplot2)
 library(microbenchmark)
 library(Rcpp)
 library(ggthemes)
-
+library(readr)
 Rcpp::sourceCpp("benchmarks.cpp")
 
 # Yoinked and heavily modified version of the autoplot method
@@ -36,6 +36,5 @@ result <- microbenchmark(
 	{write_funcs[[2]]()},
 	{write_funcs[[3]]()}
 )
-
-extractedplot(functions, c("Deque (push back)", "Vector (preallocated)", "Vector (push back)"),
-							"Vector and Deque Write Performance", "vector_write_performance.svg")
+extractedplot(result, c("Deque (push back)", "Vector (preallocated)", "Vector (push back)"),
+							"Vector and Deque Write Performance", "vector_write_performance.png")

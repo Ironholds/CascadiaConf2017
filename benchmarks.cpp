@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 using namespace Rcpp;
-//[[Rcpp::plugins(cpp11)]]
+
 //[[Rcpp::export]]
 void vector_pushback(){
 	std::vector <std::string> x;
@@ -26,15 +26,35 @@ void deque_pushback(){
 }
 
 //[[Rcpp::export]]
-void set_find_small(){
-	std::set < std::string > x{"this", "is", "a", "small", "set"};
-	bool is_in = x.find("small") != x.end();
-}
+void find_small(CharacterVector x, bool set_not_vec = false){
+	
+	if(set_not_vec){
+		std::set < std::string > y;
+		for(unsigned int i = 0; i < x.size(); i++){
+			y.insert(Rcpp::as<std::string>(x[i]));
+		}
+		bool is_in;
+		for(unsigned int i = 0; i < 1000000; i++){
+			is_in = (y.find("small") != y.end());
+		}
+		if(is_in){
+			return;
+		}
+	} else {
+		std::vector < std::string > y;
+		for(unsigned int i = 0; i < x.size(); i++){
+			y.push_back(Rcpp::as<std::string>(x[i]));
+		}
+		bool is_in;
+		for(unsigned int i = 0; i < 1000000; i++){
+			is_in = (std::find(y.begin(), y.end(), "small") != y.end());
+		}
+		if(is_in){
+			return;
+		}
+	}
+	
 
-//[[Rcpp::export]]
-void vec_find_small(){
-	std::vector < std::string > x{"this", "is", "a", "small", "set"};
-	bool is_in = (std::find(x.begin(), x.end(), "small") != x.end());
 }
 
 void vec_insert_small(){
