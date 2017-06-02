@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 using namespace Rcpp;
-
+//[[Rcpp::plugins(cpp11)]]
 //[[Rcpp::export]]
 void vector_pushback(){
 	std::vector <std::string> x;
@@ -25,12 +25,16 @@ void deque_pushback(){
 	}
 }
 
+//[[Rcpp::export]]
 void set_find_small(){
-	
+	std::set < std::string > x{"this", "is", "a", "small", "set"};
+	bool is_in = x.find("small") != x.end();
 }
 
+//[[Rcpp::export]]
 void vec_find_small(){
-	
+	std::vector < std::string > x{"this", "is", "a", "small", "set"};
+	bool is_in = (std::find(x.begin(), x.end(), "small") != x.end());
 }
 
 void vec_insert_small(){
