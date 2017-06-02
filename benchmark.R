@@ -2,7 +2,6 @@ library(ggplot2)
 library(microbenchmark)
 library(Rcpp)
 library(ggthemes)
-library(readr)
 Rcpp::sourceCpp("benchmarks.cpp")
 
 # Yoinked and heavily modified version of the autoplot method
@@ -18,7 +17,7 @@ extractedplot <- function(object, names, title, file){
 	
 	plot <- ggplot(object, ggplot2::aes_string(x = "expr", y = "ntime")) +
 		theme_tufte(base_size = 12) +
-		theme(axis.text=element_text(size=12)) +
+		theme(axis.text=element_text(size=14)) +
 		geom_tufteboxplot() +
 		coord_flip() +
 		scale_x_discrete(name="") +
