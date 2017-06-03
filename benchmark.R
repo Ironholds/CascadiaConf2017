@@ -16,12 +16,12 @@ extractedplot <- function(object, names, title, file){
 	object$ntime <- microbenchmark:::convert_to_unit(object$time, "t")
 	
 	plot <- ggplot(object, ggplot2::aes_string(x = "expr", y = "ntime")) +
-		theme_tufte(base_size = 12) +
-		theme(axis.text=element_text(size=14)) +
+		theme_tufte(base_size = 14) +
+		theme(axis.text=element_text(size=16), axis.title = element_blank()) +
 		geom_tufteboxplot() +
 		coord_flip() +
-		scale_x_discrete(name="") +
-		scale_y_log10(name = sprintf("Time (%s)", attr(object$ntime, "unit"))) +
+		scale_x_discrete() +
+		scale_y_log10() +
 		labs(title = title)
 	
 	ggsave(file, plot)

@@ -32,6 +32,7 @@ output:
 
 - Ways of making your C++ _even faster and more reliable_
 - Assumes some Rcpp knowledge
+- Standard C++, _not_ Rcpp
 
 ## Rejected titles
 
@@ -44,30 +45,24 @@ output:
 ## Vectors
 
 - C++ has vectors, just like R (and Rcpp!)
-- Almost every time people are dealing with collections of single values...
-- ...they use vectors
-
-
+- Everyone uses them
 
 ## And then bad stuff happens
 
-- Vectors are stored as contiguous memory
-- Expanding them is expensive
-- Appending...expands them.
-
 ```{Rcpp, eval=FALSE}
-
-int input_size = 1000000;
 
 std::vector < std::string > uh_oh;
 
-for(unsigned int i = 0; i < input_size; i++){
+for(unsigned int i = 0; i < 1000000; i++){
 	
-	uh_oh.push_back("noooooo!");
+	uh_oh.push_back("noooooo*gurgle**gurgle**dies*");
 	
 }
 
 ```
+
+- Vectors are contiguous - and so expanding them is expensive.
+- Appending expands them.
 
 ## Solution 1: preallocation!
 
@@ -91,7 +86,7 @@ for(unsigned int i = 0; i < input_size; i++){
 ## Solution 2: Deques!
 - If you don't know the ultimate length, use deques
 - Non-contiguous memory - cheaper to append to
-- Still slower than preallocation, mind
+- Still slower than preallocation
 
 ```{Rcpp, eval=FALSE}
 
@@ -116,5 +111,105 @@ for(unsigned int i = 0; i < input_size; i++){
 - Result:
 
 ## TADA
-<img class="stretch" src="vector_write_performance.png"></img>
+<img class="sighR" src="vector_write_performance.png"></img>
 
+# Pointers and References
+
+
+## Pointers
+
+- In C++ you can pass a 'pointer' instead of a value
+- The pointer 'points' to the value
+- Modify the pointer? Modifies the value!
+
+```
+
+int* pointer;
+int value, value2;
+
+pointer = &value;
+
+*pointer = 10; // value is 10
+
+pointer = &value2;
+
+*pointer = 10; // value2 is 10
+
+```
+
+## Pointer pointers
+
+- Pointers can be NULL, and then everything breaks
+- Confusing awful syntax
+- No.
+- No No.
+
+## References!
+
+- Similar to pointers
+- Only one possible value
+- Can't be NULL
+- Less eyeball-searing syntax
+
+```
+
+int value, value2;
+
+int& reference = value;
+
+reference = 10; // value is 10
+
+int& reference2 = value2;
+
+reference2 = 10; // value2 is 10
+
+```
+
+## Use one, Prefer References
+
+- Passing by reference/pointer > passing object (mostly)
+- References are safer
+- Edge case: if you need it to be null maybe
+
+# Operators
+
+
+## Operator choice matters
+- As well as `+`, `=`, `*`, etc, etc, C++ has `+=`, `-=`, `*=`.
+- Use these wherever possible
+
+```{rcpp}
+int x = 1;
+
+// Less efficient
+x = (x + 10);
+
+// More efficient!
+x += 10;
+```
+
+## Eh?
+
+# Misc
+
+## General principles
+
+- Pick containers judiciously
+- Never make a new object when you don't have to
+- Don't compromise readability
+
+## Other ideas
+
+Things I couldn't fit in but might be useful:
+
+- Other standard containers
+- Function inlining (and use)
+- Switches versus conditionals
+
+Google has them (or, grab me after my talk!)
+
+## Fin
+
+- https://ironholds.org
+- \@awrno / \@kopshtik
+- Slides et al: https://github.com/ironholds/cascadiaconf2017
