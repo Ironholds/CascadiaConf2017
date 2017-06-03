@@ -654,8 +654,19 @@ x = (x + 10);
 
 // More efficient!
 x += 10;</code></pre>
-</section><section id="eh" class="slide level2">
-<h1>Eh?</h1>
+</section><section id="why" class="slide level2">
+<h1>Why?</h1>
+<pre class="rcpp"><code>int x = 1;
+
+x = (x + 10);
+//Instructions:
+// - create a temporary copy of X
+// - add 10 to it
+// - replace x with the copy
+
+x += 10;
+// Instructions:
+// - add 10 to x</code></pre>
 </section></section>
 <section><section id="misc" class="titleslide slide level1"><h1>Misc</h1></section><section id="general-principles" class="slide level2">
 <h1>General principles</h1>
@@ -670,9 +681,16 @@ x += 10;</code></pre>
 <ul>
 <li>Other standard containers</li>
 <li>Function inlining (and use)</li>
-<li><p>Switches versus conditionals</p></li>
-<li>If you still want ideas on performance improvements - google!</li>
-<li><p>Or ask me after</p></li>
+<li>Switches versus conditionals</li>
+<li>Initialise &gt; assignment</li>
+</ul>
+<p>Google has them (or, grab me after my talk!)</p>
+</section><section id="fin" class="slide level2">
+<h1>Fin</h1>
+<ul>
+<li><a href="https://ironholds.org" class="uri">https://ironholds.org</a></li>
+<li>@awrno / @kopshtik</li>
+<li>Slides et al: <a href="https://github.com/ironholds/cascadiaconf2017" class="uri">https://github.com/ironholds/cascadiaconf2017</a></li>
 </ul>
 </section></section>
     </div>

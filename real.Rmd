@@ -188,7 +188,21 @@ x = (x + 10);
 x += 10;
 ```
 
-## Eh?
+## Why?
+
+```{rcpp}
+int x = 1;
+
+x = (x + 10);
+//Instructions:
+// - create a temporary copy of X
+// - add 10 to it
+// - replace x with the copy
+
+x += 10;
+// Instructions:
+// - add 10 to x
+```
 
 # Misc
 
@@ -205,6 +219,7 @@ Things I couldn't fit in but might be useful:
 - Other standard containers
 - Function inlining (and use)
 - Switches versus conditionals
+- Initialise > assignment
 
 Google has them (or, grab me after my talk!)
 
